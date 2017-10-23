@@ -48,8 +48,10 @@ def polar_to_rect(polar_num):
 def magnitude(number):
     absolute = math.sqrt((number[0] * number[0]) + (number[1]* number[1]))
     return absolute
+mode_select = raw_input
 
-# coordinate_system = raw_input
+
+# coordinate_system = your_input
 frequency = input('\nWhat is the frequency of the source? (Hz): ')
 voltage = input('\nWhat is the voltage of the source? (RMS): ')
 resistor_value = input('\nWhat value of resistor is present? (Ohms): ')
@@ -91,3 +93,36 @@ print('\nYour total impedance is: %.2f + %.2fj' % (impedance[0], impedance[1]))
 print('That means the magnitude of your impedance is: %.2f' % mag_impedance)
 print('Which then means your current is: %f A' % current)
 print('V(R) = %.2f, V(L) = %.2f, V(C) = %.2f' % (v_r, v_l, v_c))
+
+# parallel
+if (mode_select == 'Parallel') or (mode_select == 'parallel'):
+    print('This experiment I will be performing parallel calculations. One R,L, and C is expected')
+    print('If a value is not present, please type 0')
+    frequency = input('\nWhat is the frequency of the source? ( Hz): ')
+    voltage = input('\nWhat is the voltage of the source? ( RMS): ')
+    resistor_value = input('\nWhat value of resistor is present? ( Ohms): ')
+    inductor_value = input('\nWhat is the value of your inductor? ( Henrys): ')
+    inductor_resistance = input('\nWhat is the resistance of the wiring of the inductor? ( Ohms): ')
+    capacitor_value = input('\nWhat is the value of your capacitor? ( Farads): ')
+
+# calculations
+    inductance = inductor_resistance, 2 * pi * frequency * inductor_value
+    capacitance = 0, 1 / (2 * pi * frequency * capacitor_value)
+    polar_capacitance = rect_to_polar(capacitance[0], -capacitance[1])
+    polar_inductance = rect_to_polar(inductance[0], inductance[1])
+    resistance = resistor_value, 0
+    one = 1, 0
+    inverse_p_capacitance = complex_division(one, polar_capacitance)
+    inverse_p_inductance = complex_division(one, polar_inductance)
+    inverse_p_resistance = complex_division(one, resistance)
+    denominator = complex_add(inverse_p_capacitance, inverse_p_inductance)
+    denominator_f = complex_add(denominator, inverse_p_resistance)
+    total_impedance = complex_division(one, denominator_f)
+    
+
+
+
+
+
+
+
